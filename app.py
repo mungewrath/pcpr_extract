@@ -10,9 +10,7 @@ model = pickle.load(open('model.pickle', 'rb+'))
 
 @app.route('/', methods=['POST'])
 def extract():
-    print("I'm here")
     if not request.is_json:
-        print("Now I'm here")
         return "Something went wrong..."
     content = request.get_json()
     raw_text, tokens = content['text'], content['tokens'].split('\n')
@@ -29,7 +27,7 @@ def extract():
     report.region_resolution()
     report.stratify()
 
-    print(f"Gleason Score Prediction:\t {report.gleason_score[0]} + {report.gleason_score[1]} = {report.gleason_score[2]}\t(Risk={report.grade})")
+    #print(f"Gleason Score Prediction:\t {report.gleason_score[0]} + {report.gleason_score[1]} = {report.gleason_score[2]}\t(Risk={report.grade})")
     return {"preds": predictions}
 
 if __name__=='__main__':
