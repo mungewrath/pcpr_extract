@@ -31,3 +31,6 @@ def extract():
 
     print(f"Gleason Score Prediction:\t {report.gleason_score[0]} + {report.gleason_score[1]} = {report.gleason_score[2]}\t(Risk={report.grade})")
     return {"preds": predictions}
+
+if __name__=='__main__':
+    app.run(host='0.0.0.0', port=5001)
