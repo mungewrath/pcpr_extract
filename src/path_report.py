@@ -284,7 +284,22 @@ class PathologyReport:
             return sorted(total_only_candidates, key=lambda x: (x[0][0],x[0][2]), reverse=True)[0]
         return None
 
+    def drop_scores(self, scores, total=False):
+        admissable = []
+
+        for i, s in enumerate(scores):
+            if not total:
+                if s > 2 and s < 6:
+                    admissable.append(s)
+            else:
+                if s>=6 and s<11:
+                    admissable.append(s)
+        return admissable
+
     def find_best_region_candidate(self,primaries,secondaries,totals):
+        primaries = self.drop_scores(primaries)
+        secondaries = self.drop_scores(secondaries)
+        totals = self.drop_scores(totals, total=True)
         candidates = []
         total_cands = [t for t in totals if t <=10]
         for total in total_cands:
@@ -292,10 +307,10 @@ class PathologyReport:
             sums = []
             if not primaries:
                 if not secondaries:
-                    candidates.append((   (total - 1, 1,total)  ,   1 )  ) # TODO worst case score is 5 for prim or secondary, but this is low support
+                    candidates.append(((total - 3, 3,total)  ,   1 )  )
 
                 for s in secondaries:
-                    candidates.append((   (total - s, s ,total)  ,   2 ) )
+                    candidates.append(((total - s, s ,total)  ,   2 ) )
             elif not secondaries:
                 for s in primaries:
                     candidates.append(((s, total - s, total), 2))
