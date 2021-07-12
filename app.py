@@ -5,9 +5,10 @@ from src.utils import sents2vectors
 from src.features import Features
 from src.path_report import PathologyReport
 from src.send_mail import send_mail
+from src.model_wrapper import clearPathModel
 app = Flask(__name__)
 app.config['MAX_CONTENT_PATH'] = '10000000' # 10MB incase of long pathology pdfs
-model = pickle.load(open('model.pickle', 'rb+'))
+model = clearPathModel(pickle.load(open('model.pickle', 'rb+')))
 
 def get_credentials():
     credentials = open('credentials.txt', 'r').read().strip().split()
