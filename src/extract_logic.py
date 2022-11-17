@@ -36,7 +36,8 @@ def extract_and_upload_pdf(content):
             'total': str(report.gleason_score[2]),
             'risk': str(report.grade),
             'positive_cores': str(report.pos_cores),
-            'total_cores': report.total_cores}
+            'total_cores': report.total_cores,
+            'cancer_dx': report.cancer_dx }
 
     email = 'matthew.unrath@parivedasolutions.com'
 
@@ -62,11 +63,50 @@ def parse_report_values(textract, comprehendMedical):
     gleason_query = next(q for q in queries if q['Query']['Alias'] == 'GleasonScore')
     gleason_score_raw = next(r for r in query_results if r['Id'] == gleason_query['Relationships'][0]['Ids'][0])
     gleason_components = gleason_score_raw['Text'].split('=')[0]
-    g1 = gleason_components.split('+')[0]
-    g2 = gleason_components.split('+')[1]
+    g1 = int(gleason_components.split('+')[0])
+    g2 = int(gleason_components.split('+')[1])
 
-    values.gleason_score = [g1, g2, int(g1) + int(g2)]
-    values.grade = '1' # TODO hardcoded
+    cancer_query = next(q for q in queries if q['Query']['Alias'] == 'CancerType')
+    cancer_dx = next(r for r in query_results if r['Id'] == cancer_query['Relationships'][0]['Ids'][0])['Text']
+
+    values.gleason_score = [g1, g2, g1 + g2]
+    values.grade = calculate_grade(g1, g2, g1 + g2)
     values.pos_cores = '55' # TODO hardcoded
     values.total_cores = '55' # TODO hardcoded
+    values.cancer_dx = cancer_dx
     return values
+
+def calculate_grade(primary, secondary, total, simple=True):
+        """
+        Simple stratification is from the PCPR, not most recent prostate cancer schema
+        """
+        if simple:
+            if total <= 6:
+                return 1
+            elif total > 7:
+                return 3
+            else:
+                return 2
+        if total == 0:
+            if primary + secondary == 0:
+                return 0
+            else:
+                total = primary + secondary
+
+        # calculate grade
+        if total <= 6:
+            return 1
+        elif total == 7:
+            if primary == 3 and secondary == 4:
+                return 2
+            elif primary == 4 and secondary == 3:
+                return 3
+            else:
+                # return worst case
+                debug = True
+                return 3
+        elif total == 8:
+            return 4
+        elif total >= 9:
+            return 5
+        return None

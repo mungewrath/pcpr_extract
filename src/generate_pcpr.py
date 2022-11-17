@@ -28,7 +28,8 @@ def get_info(info):
     GLEASON = (info['primary'],info['secondary'], info['total'])
     RISK = num2risk[int(info['risk'])]
     CORES = str(int(round(float(info['positive_cores']) / float(info['total_cores']) * 100, 0)))
-    CANCER_DX = "prostate cancer" if int(GLEASON[2]) > 0 else "None"
+    # CANCER_DX = "prostate cancer" if int(GLEASON[2]) > 0 else "None"
+    CANCER_DX = info['cancer_dx']
     subs['|||gleason_score|||'] = f"{GLEASON[0]} + {GLEASON[1]} = {GLEASON[2]}"
     subs['|||cores|||'] = CORES
     subs['|||grade|||'] = RISK
