@@ -4,6 +4,8 @@ from reportlab.lib.styles import  getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.lib.units import mm, inch
 from uuid import uuid4
+from io import BytesIO
+
 TEMPLATE_PATH = "src/template.txt"
 GLEASON, RISK, CORES, CANCER_DX = None, None, None, None
 subs = {}
@@ -114,7 +116,10 @@ def main(info_map, email):
     tag = email.split('@')[0]
     filename = f'pcpr_{tag}.pdf'
 
-    pcpr = SimpleDocTemplate('tmp/' + filename,
+    buffer = BytesIO()
+
+    pcpr = SimpleDocTemplate(
+                             buffer, # 'tmp/' + filename,
                              pagesize=(8.5*inch, 11.0*inch),
                              topMargin=1*inch, bottomMargin=1*inch,
                              leftMargin=0.5*inch, rightMargin=0.5*inch)
@@ -125,10 +130,11 @@ def main(info_map, email):
         elements.extend(_flowable_section(sections[s]))
     pcpr.build(elements, onFirstPage=render_special)
 
+    buffer.seek(0)
 
     debug = True
 
-    return filename
+    return filename, buffer
 
 if __name__ == '__main__':
     main(None)
