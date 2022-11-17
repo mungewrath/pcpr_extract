@@ -1,4 +1,11 @@
-FROM python:3.6-slim
+FROM python:3.7-slim
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc libc6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+#    && pip install cryptography \
+#    && apt-get purge -y --auto-remove gcc and-build-dependencies
 
 ADD ./setup.sh setup.sh
 RUN ./setup.sh
