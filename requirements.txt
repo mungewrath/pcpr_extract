@@ -1,7 +1,0 @@
-reportlab==3.6.12
-#fuzzywuzzy==0.18.0
-#sklearn-crfsuite==0.3.6
-#python-crfsuite==0.9.8
-requests==2.28.1
-Flask==2.2.2
-boto3==1.26.10
