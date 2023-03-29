@@ -1,0 +1,32 @@
+HEADER - Patient summary of results, Prostate Needle Core Biopsy
+
+SECTION - Why do we do prostate biopsies?
+
+Doctors screen for prostate cancer with a blood test called PSA and a rectal exam. These tests help decide who should have more tests. A biopsy is the main way that we diagnose prostate cancer. <u>These are your results:</u>
+
+SECTION - Q1. What are the biopsy results?
+
+Based on looking at your prostate cells under the microscope, there is <u>|||cancer_dx|||</u>.
+
+SECTION - Q2. What is the grade of the cancer?
+
+Grade tells us how aggressive the tumor cells look under the microscope.
+Cancers with a higher score are more likely to multiply and spread. In prostate cancer the grade is known as the Gleason Score. This score is made up of two numbers ranging from 3 to 5. The first number shows the most common grade under the microscope and the second number is the next most common grade. The scale starts at Gleason score 3 + 3 = 6 (lowest grade) to Gleason score 5 + 5 = 10 (highest grade).<br /><b>YOUR GLEASON SCORE IS: |||gleason_score|||</b>.
+
+SECTION - Q3. How much cancer is there?
+
+To understand how much of your prostate is involved by cancer, we look at how much of each biopsy sample had cancer. You had cancer in <u><b>|||cores|||% of your biopsy samples.</b></u>
+
+SECTION - Q4. How bad is this type of cancer?
+
+To find your risk, there are many factors to use, such as your PSA, rectal exam (T stage) and your biopsy results. Based on your <u><b>biopsy results</b></u> you have <u><b> |||risk||| risk</b></u>  disease, but knowing your PSA and rectal exam findings may affect your overall risk. This information should not replace the need to talk to your doctor in more detail.
+
+SECTION - Q5. Do I need to know anything else about this cancer?
+
+N/A
+
+SECTION - What is the bottom line?
+
+This is a <b>|||grade|||</b>-grade prostate cancer that involves <b>|||cores|||%</b> of the biopsies that were taken.
+
+SECTION - Please use the following space to write down any questions you may have, to discuss with your doctor.
